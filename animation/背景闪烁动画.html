@@ -3,7 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>背景闪烁</title>
+    <script type="text/javascript" src="../js/jquery.1.8.3.min.js"></script>
+
     <style>
+        .main_div {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .main_div div {
+            margin: 20px auto 0;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        /**
+         * 元素本身也跟着渐变闪烁跳动
+         */
         @keyframes fade {
             from {
                 opacity: 1.0;
@@ -18,19 +38,76 @@
             }
         }
 
-        .blink_box {
+        /**
+         * 只是背景颜色渐变闪烁跳动
+         */
+        @keyframes bgfade {
+            0% {
+                background: white;
+            }
+
+            50% {
+                background: palevioletred;
+            }
+
+            100% {
+                background: white;
+            }
+        }
+
+        .blink_box1 {
             width: 100px;
             background: palevioletred;
+            border: 1px solid red;
             padding: 10px;
             font-size: 15px;
             height: 100px;
             animation: fade 1250ms infinite;
         }
+
+        .blink_box2 {
+            width: 100px;
+            background: palevioletred;
+            border: 1px solid red;
+            padding: 10px;
+            font-size: 15px;
+            height: 100px;
+            animation: bgfade 1250ms infinite;
+        }
     </style>
+    <script>
+        $(function(){
+            $('input[type="radio"][name="mode"]').on('click', function (){
+                const radio = $(this);
+                if (radio.val()==1) {
+                    $('.blink_box1').show();
+                    $('.blink_box2').hide();
+                }
+
+                if (radio.val()==2) {
+                    $('.blink_box2').show();
+                    $('.blink_box1').hide();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <div class="blink_box">
 
+    <div class="main_div">
+        <div>
+            效果选择:
+            <label><input type="radio" name="mode" value="1" checked>整个元素一起闪烁</label>
+            <label><input type="radio" name="mode" value="2">仅仅背景颜色闪烁</label>
+        </div>
+
+        <div class="blink_box1">
+
+        </div>
+
+        <div class="blink_box2 hide">
+
+        </div>
     </div>
 </body>
 </html>
